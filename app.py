@@ -10,18 +10,18 @@ def home():
 def procesar():
     data = request.get_json()
 
-    # Si recibe un texto
+    if not data:
+        return jsonify({"error": "Debes enviar un dato"}), 400
+
+    # Si mandas con clave "texto"
     if "texto" in data:
-        texto = data.get("texto", "")
-        return jsonify({"resultado": f"Procesado: {texto.upper()}"})
+        valor = str(data.get("texto", "")).strip()
 
-    # Si recibe un número
-    if "valor" in data:
-        valor = data.get("valor", 0)
-        try:
-            valor = float(valor)
-            return jsonify({"resultado": valor * 2})
-        except ValueError:
-            return jsonify({"error": "El valor debe ser numérico"}), 400
+        if valor.isdigit():
+            return jsonify({"resultado": f"'{valor}' es un número"})
+        elif valor.isalpha():
+            return jsonify({"resultado": f"'{valor}' es una letra"})
+        else:
+            return jsonify({"resultado": f"'{valor}' es mixto (letras y números)"})
 
-    return jsonify({"error": "Debes enviar 'texto' o 'valor'"}), 400
+    return jsonify({"error": "Debes enviar 'texto'"}), 400
