@@ -9,9 +9,10 @@ def home():
 @app.route("/procesar", methods=["POST"])
 def procesar():
     data = request.get_json()
-    valor = data.get("valor", 0)
-    resultado = valor * 2
+    texto = data.get("texto", "")
+    resultado = "Procesado: " + texto.upper()
     return jsonify({"resultado": resultado})
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
