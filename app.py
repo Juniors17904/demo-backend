@@ -13,7 +13,6 @@ def procesar():
     if not data:
         return jsonify({"error": "Debes enviar un dato"}), 400
 
-    # Si mandas con clave "texto"
     if "texto" in data:
         valor = str(data.get("texto", "")).strip()
 
